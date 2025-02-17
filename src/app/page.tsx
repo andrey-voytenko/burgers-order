@@ -5,18 +5,18 @@ import Item from '@/components/item'
 import React, { useState } from 'react'
 
 export default function Home() {
-  const [order, setOrder] = useState<{ [id: number]: number }>({})
+  const [order, setOrder] = useState<{ [id: number]: number }>({});
 
   function onCountChange(id: number, count: number) {
     setOrder((prevOrder) => ({
       ...prevOrder,
       [id]: count,
-    }))
+    }));
   }
 
   function saveOrder(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    console.log('Order:', order)
+    event.preventDefault();
+    console.log('Order:', order);
   }
 
   return (

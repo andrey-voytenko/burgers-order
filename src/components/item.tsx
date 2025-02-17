@@ -1,5 +1,3 @@
-'use client'
-
 import { Product } from '@/types/product'
 import React, { useState } from 'react'
 
@@ -10,23 +8,23 @@ export default function Item({
   product: Product
   onCountChange: (id: number, count: number) => void
 }) {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   function increase(e: React.MouseEvent) {
-    e.preventDefault()
-    const newCount = count + 1
-    setCount(newCount)
-    onCountChange(product.id, newCount)
+    e.preventDefault();
+    const newCount = count + 1;
+    setCount(newCount);
+    onCountChange(product.id, newCount);
   }
 
   function decrease(e: React.MouseEvent) {
-    e.preventDefault()
+    e.preventDefault();
     if (count === 0) {
-      return
+      return;
     }
-    const newCount = count - 1
-    setCount(newCount)
-    onCountChange(product.id, newCount)
+    const newCount = count - 1;
+    setCount(newCount);
+    onCountChange(product.id, newCount);
   }
 
   return (
