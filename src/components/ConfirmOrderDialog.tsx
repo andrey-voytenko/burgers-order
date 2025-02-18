@@ -54,9 +54,9 @@ export default function ConfirmOrderDialog({
   let sum = 0;
 
   return (
-    <dialog ref={dialogRef} className="p-6 rounded-lg">
+    <dialog ref={dialogRef} className="p-6">
       <input
-        className="bg-transparent border-b border-white focus:outline-none w-full mb-3"
+        className="bg-transparent border-b border-b-gray-400 focus:outline-none w-full mb-3"
         type="text"
         placeholder="Імʼя"
         value={name}
@@ -85,11 +85,14 @@ export default function ConfirmOrderDialog({
         <p>{sum} грн</p>
       </div>
       <div className="flex flex-row justify-between gap-4 mt-6">
-        <button className="p-1 border rounded-lg" onClick={handleClose}>
+        <button
+          className="p-2 border shadow text-red-300 w-28"
+          onClick={handleClose}
+        >
           Скасувати
         </button>
         <button
-          className="p-1 border rounded-lg disabled:text-gray-400 disabled:border-none"
+          className="p-2 border shadow disabled:text-gray-400 w-28 text-green-300 disabled:border-none disabled:bg-white"
           onClick={handleConfirm}
           disabled={name.length < 3}
         >

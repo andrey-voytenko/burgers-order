@@ -25,6 +25,20 @@ export default function RootLayout({
             href="https://www.linkedin.com/in/voitenko-developer/"
           >
             Andrii Voitenko
+          </Link>
+          {', '}
+          <Link
+            target="_blank"
+            href="https://www.linkedin.com/in/vitaliy-lysenko-264530107/"
+          >
+            Vitaliy Lysenko
+          </Link>
+          {', '}
+          <Link
+            target="_blank"
+            href="https://www.linkedin.com/in/dmitry-lysenko-264207186/"
+          >
+            Dmitry Lysenko
           </Link>{' '}
           and friends
         </h4>

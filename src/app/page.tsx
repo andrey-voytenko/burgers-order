@@ -1,10 +1,10 @@
 'use client';
 
 import { burgers, combos, snacks, sauces } from '@/data/menu.json';
-import Item from '@/components/Item';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Product } from '@/types/product';
 import ConfirmOrderDialog from '@/components/ConfirmOrderDialog';
+import ProductList from '@/components/ProductList';
 
 export default function Home() {
   const [order, setOrder] = useState<{ [id: number]: number }>({});
@@ -14,6 +14,7 @@ export default function Home() {
   const [filteredSnacksList, setFilteredSnacksList] = useState<Product[]>([]);
   const [filteredSaucesList, setFilteredSaucesList] = useState<Product[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [resetTrigger, setResetTrigger] = useState(false);
 
   useEffect(() => {
     setFilteredBurgersList(
@@ -32,20 +33,32 @@ export default function Home() {
     );
   }, [search]);
 
+  function onResetHandler() {
+    setOrder({});
+    setResetTrigger(!resetTrigger);
+  }
+
   function onSearchChange(event: ChangeEvent<HTMLInputElement>): void {
     setSearch(event.target.value);
   }
 
   function onCountChange(id: number, count: number) {
-    setOrder((prevOrder) => ({
-      ...prevOrder,
-      [id]: count,
-    }));
+    setOrder((prevOrder) => {
+      const order = {
+        ...prevOrder,
+        [id]: count,
+      };
+
+      if (count === 0) {
+        delete order[id];
+      }
+
+      return order;
+    });
   }
 
   function saveOrder(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log('Order:', order);
     setIsModalOpen(true);
   }
 
@@ -64,51 +77,37 @@ export default function Home() {
           value={search}
           onChange={onSearchChange}
         />
-        <form onSubmit={saveOrder} action="" className="min-w-64">
+        <form onSubmit={saveOrder} className="min-w-64">
           <ol className="list-inside text-sm font-[monospace]">
-            {filteredBurgersList.length > 0 && (
-              <h2 className="text-xl my-6">Бургери</h2>
-            )}
-            {filteredBurgersList.map((burger) => (
-              <Item
-                product={burger}
-                key={burger.id}
-                onCountChange={onCountChange}
-              />
-            ))}
+            <ProductList
+              title="Бургери"
+              products={filteredBurgersList}
+              onCountChange={onCountChange}
+              resetTrigger={resetTrigger}
+            />
 
-            {filteredCombosList.length > 0 && (
-              <h2 className="text-xl my-6">Комбо</h2>
-            )}
-            {filteredCombosList.map((combo) => (
-              <Item
-                product={combo}
-                key={combo.id}
-                onCountChange={onCountChange}
-              />
-            ))}
+            <ProductList
+              title="Комбо"
+              products={filteredCombosList}
+              onCountChange={onCountChange}
+              resetTrigger={resetTrigger}
+            />
 
-            {filteredSnacksList.length > 0 && (
-              <h2 className="text-xl my-6">Снеки</h2>
-            )}
-            {filteredSnacksList.map((snack) => (
-              <Item
-                product={snack}
-                key={snack.id}
-                onCountChange={onCountChange}
-              />
-            ))}
+            <ProductList
+              title="Снеки"
+              products={filteredSnacksList}
+              onCountChange={onCountChange}
+              isOpened={false}
+              resetTrigger={resetTrigger}
+            />
 
-            {filteredSaucesList.length > 0 && (
-              <h2 className="text-xl my-6">Соуси</h2>
-            )}
-            {filteredSaucesList.map((sauce) => (
-              <Item
-                product={sauce}
-                key={sauce.id}
-                onCountChange={onCountChange}
-              />
-            ))}
+            <ProductList
+              title="Соуси"
+              products={filteredSaucesList}
+              onCountChange={onCountChange}
+              isOpened={false}
+              resetTrigger={resetTrigger}
+            />
           </ol>
           {!filteredSaucesList.length &&
             !filteredBurgersList.length &&
@@ -116,12 +115,20 @@ export default function Home() {
             !filteredSnacksList.length && (
               <p className="text-center my-10">Спробуй ще раз...</p>
             )}
+
           <button
             type="submit"
-            className="mt-8 border p-2 disabled:text-gray-400 disabled:border-gray-400 float-right"
+            className="mt-8 ml-6 border p-2 disabled:text-gray-400 disabled:border-gray-400 float-right"
             disabled={Object.keys(order).length === 0}
           >
             Замовити
+          </button>
+          <button
+            type="reset"
+            className="mt-8 ml-6 border p-2 float-right"
+            onClick={onResetHandler}
+          >
+            Очистити
           </button>
         </form>
       </main>
