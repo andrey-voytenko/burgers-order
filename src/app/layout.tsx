@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import React from 'react'
-import { Analytics } from '@vercel/analytics/vue';
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
   title: 'Burgers order app',
