@@ -35,6 +35,7 @@ export default function Home() {
 
   function onResetHandler() {
     setOrder({});
+    setSearch('');
     setResetTrigger(!resetTrigger);
   }
 
