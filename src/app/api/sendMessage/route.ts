@@ -3,7 +3,7 @@ export async function POST(req: Request) {
     const { message } = await req.json();
 
     if (!message) {
-      return new Response(JSON.stringify({ error: "Message is required" }), {
+      return new Response(JSON.stringify({ error: { message: "Message is required"} }), {
         status: 400,
         headers: { "Content-Type": "application/json" },
       });
@@ -22,8 +22,8 @@ export async function POST(req: Request) {
     const result = await response.json();
     return new Response(JSON.stringify(result), { status: 200, headers: { "Content-Type": "application/json" } });
 
-  } catch (error: any) {
-    return new Response(JSON.stringify({ error: error.message }), {
+  } catch {
+    return new Response(JSON.stringify('Internal Server Error'), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });
