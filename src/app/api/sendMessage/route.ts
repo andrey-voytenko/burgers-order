@@ -19,7 +19,7 @@ export async function POST(req: Request) {
       }),
     });
 
-    const result = await response.json();
+    const result = await response.json().then((res) => res.ok);
     return new Response(JSON.stringify(result), { status: 200, headers: { "Content-Type": "application/json" } });
 
   } catch {
