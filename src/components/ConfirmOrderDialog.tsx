@@ -92,7 +92,7 @@ export default function ConfirmOrderDialog({
           Скасувати
         </button>
         <button
-          className="p-2 border shadow disabled:text-gray-400 w-28 text-green-300 disabled:border-none disabled:bg-white"
+          className="p-2 border shadow disabled:shadow-none disabled:text-gray-400 w-28 text-green-300 disabled:border-none disabled:bg-white"
           onClick={handleConfirm}
           disabled={name.length < 3}
         >
