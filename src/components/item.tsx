@@ -29,7 +29,7 @@ export default function Item({
 
   return (
     <li className="pt-2">
-      <div className="flex flex-row justify-between gap-8">
+      <div className="flex flex-row justify-between items-center gap-8">
         <div className="flex flex-col max-w-96">
           <p className="text-base">
             {product.name}{' '}
@@ -44,9 +44,9 @@ export default function Item({
           </p>
         </div>
         <div className="flex flex-row items-baseline gap-x-2 text-white text-sm">
-          <button onClick={decrease}>-</button>
+          <button className="border p-1" onClick={decrease}>-</button>
           <span>{count}</span>
-          <button onClick={increase}>+</button>
+          <button className="border p-1" onClick={increase}>+</button>
         </div>
       </div>
     </li>
