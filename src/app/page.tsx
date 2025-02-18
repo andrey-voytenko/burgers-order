@@ -1,17 +1,19 @@
 'use client';
 
 import { burgers, combos, snacks, sauces } from '@/data/menu.json';
-import Item from '@/components/item';
+import Item from '@/components/Item';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Product } from '@/types/product';
+import ConfirmOrderDialog from '@/components/ConfirmOrderDialog';
 
 export default function Home() {
-  const [order, setOrder] = useState<Map<number, number>>(new Map([]));
+  const [order, setOrder] = useState<{ [id: number]: number }>({});
   const [search, setSearch] = useState<string>('');
   const [filteredBurgersList, setFilteredBurgersList] = useState<Product[]>([]);
   const [filteredCombosList, setFilteredCombosList] = useState<Product[]>([]);
   const [filteredSnacksList, setFilteredSnacksList] = useState<Product[]>([]);
   const [filteredSaucesList, setFilteredSaucesList] = useState<Product[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     setFilteredBurgersList(
@@ -44,9 +46,16 @@ export default function Home() {
   function saveOrder(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     console.log('Order:', order);
+    setIsModalOpen(true);
   }
+
   return (
     <div className="grid grid-rows-[20px_1fr_20px] justify-items-center min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      <ConfirmOrderDialog
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        order={order}
+      />
       <main className="flex flex-col gap-8 row-start-2 items-start">
         <input
           className="bg-transparent border-b border-white focus:outline-none w-full"
@@ -110,7 +119,7 @@ export default function Home() {
           <button
             type="submit"
             className="mt-8 border p-2 disabled:text-gray-400 disabled:border-gray-400 float-right"
-            disabled={order.size === 0}
+            disabled={Object.keys(order).length === 0}
           >
             Замовити
           </button>
