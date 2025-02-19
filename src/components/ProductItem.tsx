@@ -1,36 +1,29 @@
 import { Product } from '@/types/product';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useOrderStore } from '@/store/order';
 
-export default function ProductItem({
-  product,
-  onCountChange,
-  resetTrigger,
-}: {
-  product: Product;
-  onCountChange: (id: number, count: number) => void;
-  resetTrigger: boolean;
-}) {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    setCount(0);
-  }, [resetTrigger]);
+export default function ProductItem({ product }: { product: Product }) {
+  const { addProduct, removeProduct, order } = useOrderStore();
 
   function increase(e: React.MouseEvent) {
     e.preventDefault();
-    const newCount = count + 1;
-    setCount(newCount);
-    onCountChange(product.id, newCount);
+    const newCount = (order.get(product) ?? 0) + 1;
+    addProduct(product, newCount);
   }
 
   function decrease(e: React.MouseEvent) {
     e.preventDefault();
-    if (count === 0) {
+    const count = order.get(product);
+
+    if (count === undefined) {
+      return;
+    } else if (count <= 1) {
+      removeProduct(product);
       return;
     }
-    const newCount = count - 1;
-    setCount(newCount);
-    onCountChange(product.id, newCount);
+
+    const newCount = (count ?? 0) - 1;
+    addProduct(product, newCount);
   }
 
   return (
@@ -53,7 +46,7 @@ export default function ProductItem({
           <button className="border p-1" onClick={decrease}>
             -
           </button>
-          <span>{count}</span>
+          <span>{order.get(product) ?? 0}</span>
           <button className="border p-1" onClick={increase}>
             +
           </button>

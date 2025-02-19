@@ -1,32 +1,19 @@
-import React, { useRef, useState } from 'react';
-import { burgers, combos, snacks, sauces } from '@/data/menu.json';
+import React, { useRef } from 'react';
+import { useOrderStore } from '@/store/order';
 
 export default function ConfirmOrderDialog({
   isOpen,
   onClose,
-  order,
 }: {
   isOpen: boolean;
   onClose: () => void;
-  order: { [id: number]: number };
 }) {
-  const [name, setName] = useState('');
-
-  function onNameChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setName(e.target.value);
-  }
-
-  function handleClose() {
-    onClose();
-  }
+  const { order, name, setName } = useOrderStore();
 
   function handleConfirm() {
     let message = `Замовлення від: ${name} \n\n`;
-    Object.entries(order).forEach(([productId, count]) => {
-      const product = getProductById(+productId);
-      if (product) {
-        message += `${product.name} ${product.weight} : ${count} шт. \n`;
-      }
+    order.forEach((count, product) => {
+      message += `${product.name} ${product.weight} : ${count} шт. \n`;
     });
     message += '\n До сплати: ' + sum + ' грн';
 
@@ -60,16 +47,15 @@ export default function ConfirmOrderDialog({
         type="text"
         placeholder="Імʼя"
         value={name}
-        onChange={onNameChange}
+        onChange={(e) => setName(e.target.value)}
       />
-      {Object.entries(order).map(([productId, count]) => {
-        const product = getProductById(+productId);
+      {Array.from(order).map(([product, count]) => {
         sum += (product?.prices.gold ?? 0) * count;
         return (
           product && (
             <div
               className="py-1 flex flex-row justify-between min-w-64"
-              key={productId}
+              key={product.id}
             >
               <p className="text-left inline">
                 {product.name}{' '}
@@ -87,7 +73,7 @@ export default function ConfirmOrderDialog({
       <div className="flex flex-row justify-between gap-4 mt-6">
         <button
           className="p-2 border shadow text-red-300 w-28"
-          onClick={handleClose}
+          onClick={() => onClose()}
         >
           Скасувати
         </button>
@@ -101,28 +87,4 @@ export default function ConfirmOrderDialog({
       </div>
     </dialog>
   );
-}
-
-function getProductById(id: number) {
-  const burger = burgers.find((product) => product.id === id);
-  if (burger) {
-    return burger;
-  }
-
-  const combo = combos.find((product) => product.id === id);
-  if (combo) {
-    return combo;
-  }
-
-  const snack = snacks.find((sauce) => sauce.id === id);
-  if (snack) {
-    return snack;
-  }
-
-  const sauce = sauces.find((sauce) => sauce.id === id);
-  if (sauce) {
-    return sauce;
-  }
-
-  return undefined;
 }

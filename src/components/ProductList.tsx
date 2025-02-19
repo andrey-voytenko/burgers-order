@@ -5,15 +5,11 @@ import React from 'react';
 export default function ProductList({
   title,
   products,
-  onCountChange,
-  resetTrigger,
   isOpened = true,
 }: {
   title: string;
   products: Product[];
   isOpened?: boolean;
-  resetTrigger: boolean;
-  onCountChange: (productId: number, count: number) => void;
 }) {
   const [isProductsVisible, setIsProductsVisible] = React.useState(isOpened);
 
@@ -29,12 +25,7 @@ export default function ProductList({
       )}
       {isProductsVisible &&
         products.map((burger) => (
-          <ProductItem
-            product={burger}
-            key={burger.id}
-            resetTrigger={resetTrigger}
-            onCountChange={onCountChange}
-          />
+          <ProductItem product={burger} key={burger.id} />
         ))}
     </>
   );

@@ -1,62 +1,35 @@
 'use client';
 
 import { burgers, combos, snacks, sauces } from '@/data/menu.json';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Product } from '@/types/product';
 import ConfirmOrderDialog from '@/components/ConfirmOrderDialog';
 import ProductList from '@/components/ProductList';
+import { useOrderStore } from '@/store/order';
 
 export default function Home() {
-  const [order, setOrder] = useState<{ [id: number]: number }>({});
-  const [search, setSearch] = useState<string>('');
+  const { order, searchText, setSearchText, resetOrder } = useOrderStore();
+
   const [filteredBurgersList, setFilteredBurgersList] = useState<Product[]>([]);
   const [filteredCombosList, setFilteredCombosList] = useState<Product[]>([]);
   const [filteredSnacksList, setFilteredSnacksList] = useState<Product[]>([]);
   const [filteredSaucesList, setFilteredSaucesList] = useState<Product[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [resetTrigger, setResetTrigger] = useState(false);
 
   useEffect(() => {
     setFilteredBurgersList(
-      burgers.filter((x) =>
-        x.name.toLowerCase().includes(search.toLowerCase()),
-      ),
+      burgers.filter((x) => x.name.toLowerCase().includes(searchText)),
     );
     setFilteredSaucesList(
-      sauces.filter((x) => x.name.toLowerCase().includes(search.toLowerCase())),
+      sauces.filter((x) => x.name.toLowerCase().includes(searchText)),
     );
     setFilteredCombosList(
-      combos.filter((x) => x.name.toLowerCase().includes(search.toLowerCase())),
+      combos.filter((x) => x.name.toLowerCase().includes(searchText)),
     );
     setFilteredSnacksList(
-      snacks.filter((x) => x.name.toLowerCase().includes(search.toLowerCase())),
+      snacks.filter((x) => x.name.toLowerCase().includes(searchText)),
     );
-  }, [search]);
-
-  function onResetHandler() {
-    setOrder({});
-    setSearch('');
-    setResetTrigger(!resetTrigger);
-  }
-
-  function onSearchChange(event: ChangeEvent<HTMLInputElement>): void {
-    setSearch(event.target.value);
-  }
-
-  function onCountChange(id: number, count: number) {
-    setOrder((prevOrder) => {
-      const order = {
-        ...prevOrder,
-        [id]: count,
-      };
-
-      if (count === 0) {
-        delete order[id];
-      }
-
-      return order;
-    });
-  }
+  }, [searchText]);
 
   function saveOrder(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -68,46 +41,31 @@ export default function Home() {
       <ConfirmOrderDialog
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        order={order}
       />
       <main className="flex flex-col gap-8 row-start-2 items-start">
         <input
           className="bg-transparent border-b border-white focus:outline-none w-full"
           type="text"
           placeholder="Пошук"
-          value={search}
-          onChange={onSearchChange}
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
         />
         <form onSubmit={saveOrder} className="min-w-64">
           <ol className="list-inside text-sm font-[monospace]">
-            <ProductList
-              title="Бургери"
-              products={filteredBurgersList}
-              onCountChange={onCountChange}
-              resetTrigger={resetTrigger}
-            />
+            <ProductList title="Бургери" products={filteredBurgersList} />
 
-            <ProductList
-              title="Комбо"
-              products={filteredCombosList}
-              onCountChange={onCountChange}
-              resetTrigger={resetTrigger}
-            />
+            <ProductList title="Комбо" products={filteredCombosList} />
 
             <ProductList
               title="Снеки"
               products={filteredSnacksList}
-              onCountChange={onCountChange}
               isOpened={false}
-              resetTrigger={resetTrigger}
             />
 
             <ProductList
               title="Соуси"
               products={filteredSaucesList}
-              onCountChange={onCountChange}
               isOpened={false}
-              resetTrigger={resetTrigger}
             />
           </ol>
           {!filteredSaucesList.length &&
@@ -120,14 +78,14 @@ export default function Home() {
           <button
             type="submit"
             className="mt-8 ml-6 border p-2 disabled:text-gray-400 disabled:border-gray-400 float-right"
-            disabled={Object.keys(order).length === 0}
+            disabled={order.size === 0}
           >
             Замовити
           </button>
           <button
             type="reset"
             className="mt-8 ml-6 border p-2 float-right"
-            onClick={onResetHandler}
+            onClick={() => resetOrder()}
           >
             Очистити
           </button>
