@@ -145,7 +145,7 @@
       "id": 13,
       "name": "Сирні палички",
       "prices": { "gold": 75, "regular": 150 },
-      "weight": ""
+      "count": "3шт."
     },
     {
       "id": 14,
@@ -162,7 +162,7 @@
     {
       "id": 15,
       "name": "Картопля фрі",
-      "weight": "100",
+      "weight": "100г",
       "prices": { "gold": 30, "regular": 55 }
     },
     {
@@ -174,61 +174,61 @@
     {
       "id": 16,
       "name": "Нагетси курячі",
-      "weight": "4шт.",
+      "count": "4шт.",
       "prices": { "gold": 40, "regular": 60 }
     },
     {
       "id": 160,
       "name": "Нагетси курячі",
-      "weight": "8шт.",
+      "count": "8шт.",
       "prices": { "gold": 65, "regular": 115 }
     },
     {
       "id": 17,
       "name": "Нагетси рибні",
-      "weight": "4шт.",
+      "count": "4шт.",
       "prices": { "gold": 58, "regular": 160 }
     },
     {
       "id": 170,
       "name": "Нагетси рибні",
-      "weight": "8шт.",
+      "count": "8шт.",
       "prices": { "gold": 102, "regular": 160 }
     },
     {
       "id": 18,
       "name": "Крильця в паніровці",
-      "weight": "4шт.",
+      "count": "4шт.",
       "prices": { "gold": 50, "regular": 90 }
     },
     {
       "id": 180,
       "name": "Крильця в паніровці",
-      "weight": "8шт.",
+      "count": "8шт.",
       "prices": { "gold": 90, "regular": 180 }
     },
     {
       "id": 19,
       "name": "Цибулеві кільця",
-      "weight": "10шт.",
+      "count": "10шт.",
       "prices": { "gold": 60, "regular": 115 }
     },
     {
       "id": 20,
       "name": "Кільця кальмара",
-      "weight": "5шт.",
+      "count": "5шт.",
       "prices": { "gold": 60, "regular": 125 }
     },
     {
       "id": 21,
       "name": "Фалафель",
-      "weight": "4шт.",
+      "count": "4шт.",
       "prices": { "gold": 45, "regular": 120 }
     },
     {
       "id": 22,
       "name": "Корн-дог",
-      "weight": "3шт.",
+      "count": "3шт.",
       "prices": { "gold": 68, "regular": 110 }
     },
     {

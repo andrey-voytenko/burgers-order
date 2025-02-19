@@ -25,13 +25,26 @@ export default function ProductCounter({ product }: { product: Product }) {
     const newCount = (count ?? 0) - 1;
     addProduct(product, newCount);
   }
+
+  function manualCountChange(e: React.ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
+    let count = e.target.value.replace(/\D/g, ''); // Видаляємо нецифрові символи
+    if (count.length > 2) count = count.slice(0, 2); // Обмежуємо 2 цифрами
+
+    addProduct(product, +count);
+  }
   return (
     <>
       <div className="flex flex-row items-baseline gap-x-2 text-sm">
         <button className="border p-1" onClick={decrease}>
           -
         </button>
-        <span>{order.get(product) ?? 0}</span>
+        <input
+          className="bg-transparent border-none outline-none max-w-4 text-center"
+          type="number"
+          value={order.get(product) ?? 0}
+          onChange={(e) => manualCountChange(e)}
+        />
         <button className="border p-1" onClick={increase}>
           +
         </button>

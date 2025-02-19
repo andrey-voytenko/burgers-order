@@ -3,5 +3,6 @@ export type Product = {
   name: string;
   description?: string;
   weight?: string;
+  count?: string;
   prices: { gold: number; regular: number };
-}
+};

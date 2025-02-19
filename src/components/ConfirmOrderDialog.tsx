@@ -20,7 +20,7 @@ export default function ConfirmOrderDialog({
   function handleConfirm() {
     let message = `Замовлення від: ${name} \n\n`;
     order.forEach((count, product) => {
-      message += `${product.name} ${product.weight} : ${count} шт. \n`;
+      message += `${product.name} ${product.count ?? ''} : ${count} шт. \n`;
     });
     message += '\n До сплати: ' + sum + ' грн';
 
@@ -66,7 +66,7 @@ export default function ConfirmOrderDialog({
             >
               <p className="text-left inline">
                 {product.name}{' '}
-                <span className="text-xs">{product?.weight ?? ''}</span>
+                <span className="text-xs">{product.count ?? ''}</span>
               </p>
               <ProductCounter product={product} />
             </div>

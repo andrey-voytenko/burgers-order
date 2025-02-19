@@ -9,7 +9,9 @@ export default function ProductItem({ product }: { product: Product }) {
         <div className="flex flex-col w-full max-w-96">
           <p className="text-base">
             {product.name}{' '}
-            <span className="text-sm text-gray-400">{product.weight}</span>
+            <span className="text-xs text-gray-400">
+              {product.count ?? product.weight ?? ''}
+            </span>
             <span className="text-sm float-right">
               <span className="text-yellow-400">{product.prices.gold}</span>{' '}
               <span className="line-through">{product.prices.regular}</span>
