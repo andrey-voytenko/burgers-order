@@ -1,5 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useOrderStore } from '@/store/order';
+import ProductCounter from '@/components/ProductCounter';
 
 export default function ConfirmOrderDialog({
   isOpen,
@@ -9,6 +10,12 @@ export default function ConfirmOrderDialog({
   onClose: () => void;
 }) {
   const { order, name, setName } = useOrderStore();
+
+  useEffect(() => {
+    if (order.size === 0) {
+      onClose();
+    }
+  }, [order, onClose]);
 
   function handleConfirm() {
     let message = `Замовлення від: ${name} \n\n`;
@@ -61,7 +68,7 @@ export default function ConfirmOrderDialog({
                 {product.name}{' '}
                 <span className="text-xs">{product?.weight ?? ''}</span>
               </p>
-              <p className="text-right inline ml-6">{count}</p>
+              <ProductCounter product={product} />
             </div>
           )
         );
@@ -80,7 +87,7 @@ export default function ConfirmOrderDialog({
         <button
           className="p-2 border shadow disabled:shadow-none disabled:text-gray-400 w-28 text-green-300 disabled:border-none disabled:bg-white"
           onClick={handleConfirm}
-          disabled={name.length < 3}
+          disabled={!name}
         >
           Підтвердити
         </button>
