@@ -1,6 +1,22 @@
 import React, { useEffect, useRef } from 'react';
 import { useOrderStore } from '@/store/order';
 import ProductCounter from '@/components/ProductCounter';
+import { Product } from '@/types/product';
+
+async function saveData(name: string, order: Map<Product, number>) {
+  const jsonOrder = JSON.stringify(order);
+  const res = await fetch('/api/save', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      key: 'orders',
+      data: [Object.assign(jsonOrder, { id: new Date().toISOString(), name })],
+    }),
+  });
+
+  const data = await res.json();
+  console.log('Збережено:', data);
+}
 
 export default function ConfirmOrderDialog({
   isOpen,
@@ -18,13 +34,14 @@ export default function ConfirmOrderDialog({
   }, [order, onClose]);
 
   function handleConfirm() {
-    let message = `Замовлення від: ${name} \n\n`;
+    saveData(name, order).then(() => alert('OK'));
+    /*let message = `Замовлення від: ${name} \n\n`;
     order.forEach((count, product) => {
       message += `${product.name} ${product.count ?? ''} : ${count} шт. \n`;
     });
-    message += '\n До сплати: ' + sum + ' грн';
+    message += '\n До сплати: ' + sum + ' грн';*/
 
-    fetch('/api/sendMessage', {
+    /*fetch('/api/sendMessage', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: message }),
@@ -34,7 +51,7 @@ export default function ConfirmOrderDialog({
         onClose();
         alert('Готово, все ок!');
       })
-      .catch((err) => console.error('Помилка:', err));
+      .catch((err) => console.error('Помилка:', err));*/
   }
 
   const dialogRef = useRef<HTMLDialogElement>(null);
