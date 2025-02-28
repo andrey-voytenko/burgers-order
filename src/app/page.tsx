@@ -1,6 +1,6 @@
 'use client';
 
-import { burgers, combos, snacks, sauces } from '@/data/menu.json';
+import { burgers, combos, snacks, sauces, chicken } from '@/data/menu.json';
 import React, { useEffect, useState } from 'react';
 import { Product } from '@/types/product';
 import ConfirmOrderDialog from '@/components/ConfirmOrderDialog';
@@ -14,6 +14,7 @@ export default function Home() {
   const [filteredCombosList, setFilteredCombosList] = useState<Product[]>([]);
   const [filteredSnacksList, setFilteredSnacksList] = useState<Product[]>([]);
   const [filteredSaucesList, setFilteredSaucesList] = useState<Product[]>([]);
+  const [filteredChickenList, setFilteredChickenList] = useState<Product[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -28,6 +29,9 @@ export default function Home() {
     );
     setFilteredSnacksList(
       snacks.filter((x) => x.name.toLowerCase().includes(searchText)),
+    );
+    setFilteredChickenList(
+      chicken.filter((x) => x.name.toLowerCase().includes(searchText)),
     );
   }, [searchText]);
 
@@ -52,6 +56,12 @@ export default function Home() {
         />
         <form onSubmit={saveOrder} className="min-w-64">
           <ol className="list-inside text-sm font-[monospace]">
+            <ProductList
+              title="Курочка"
+              isNew={true}
+              products={filteredChickenList}
+            />
+
             <ProductList title="Бургери" products={filteredBurgersList} />
 
             <ProductList title="Комбо" products={filteredCombosList} />
