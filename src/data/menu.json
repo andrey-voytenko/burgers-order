@@ -226,6 +226,7 @@
       "id": 14,
       "name": "Картопляні діпи",
       "weight": "100г",
+      "count": "100г",
       "prices": {
         "gold": 33,
         "regular": 55
@@ -235,6 +236,7 @@
       "id": 140,
       "name": "Картопляні діпи",
       "weight": "200г",
+      "count": "200г",
       "prices": {
         "gold": 58,
         "regular": 105
@@ -244,6 +246,7 @@
       "id": 15,
       "name": "Картопля фрі",
       "weight": "100г",
+      "count": "100г",
       "prices": {
         "gold": 30,
         "regular": 55
@@ -253,6 +256,7 @@
       "id": 150,
       "name": "Картопля фрі",
       "weight": "200г",
+      "count": "200г",
       "prices": {
         "gold": 55,
         "regular": 105
