@@ -13,6 +13,8 @@ export default function ProductItem({ product }: { product: Product }) {
               {product.count ?? product.weight ?? ''}
             </span>
             <span className="text-sm float-right">
+              <span style={{color:'oklch(70.7% 0.022 261.325)'}} >{product.prices.platinum}</span>{' '}
+              <span>/</span>{' '}
               <span className="text-yellow-400">{product.prices.gold}</span>{' '}
               <span className="line-through">{product.prices.regular}</span>
             </span>

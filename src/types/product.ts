@@ -4,5 +4,5 @@ export type Product = {
   description?: string;
   weight?: string;
   count?: string;
-  prices: { gold: number; regular: number };
+  prices: { gold: number; regular: number, platinum: number };
 };
