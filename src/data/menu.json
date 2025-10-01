@@ -413,7 +413,8 @@
       "weight": "30г",
       "prices": {
         "gold": 12,
-        "regular": 20
+        "regular": 20,
+        "platinum":7
       }
     },
     {
@@ -422,7 +423,8 @@
       "weight": "30г",
       "prices": {
         "gold": 12,
-        "regular": 20
+        "regular": 20,
+        "platinum":7
       }
     },
     {
@@ -431,7 +433,8 @@
       "weight": "30г",
       "prices": {
         "gold": 12,
-        "regular": 20
+        "regular": 20,
+        "platinum":7
       }
     },
     {
@@ -440,7 +443,8 @@
       "weight": "30г",
       "prices": {
         "gold": 12,
-        "regular": 20
+        "regular": 20,
+        "platinum":7
       }
     },
     {
@@ -449,7 +453,8 @@
       "weight": "30г",
       "prices": {
         "gold": 12,
-        "regular": 20
+        "regular": 20,
+        "platinum":7
       }
     },
     {
@@ -458,7 +463,8 @@
       "weight": "30г",
       "prices": {
         "gold": 12,
-        "regular": 20
+        "regular": 20,
+        "platinum":7
       }
     },
     {
@@ -467,7 +473,8 @@
       "weight": "30г",
       "prices": {
         "gold": 12,
-        "regular": 20
+        "regular": 20,
+        "platinum":7
       }
     }
   ]

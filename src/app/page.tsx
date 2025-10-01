@@ -14,7 +14,6 @@ export default function Home() {
   const [filteredCombosList, setFilteredCombosList] = useState<Product[]>([]);
   const [filteredSnacksList, setFilteredSnacksList] = useState<Product[]>([]);
   const [filteredSaucesList, setFilteredSaucesList] = useState<Product[]>([]);
-  //const [filteredChickenList, setFilteredChickenList] = useState<Product[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -30,9 +29,6 @@ export default function Home() {
     setFilteredSnacksList(
       snacks.filter((x) => x.name.toLowerCase().includes(searchText)),
     );
-    // setFilteredChickenList(
-    //   chicken.filter((x) => x.name.toLowerCase().includes(searchText)),
-    // );
   }, [searchText]);
 
   function saveOrder(event: React.FormEvent<HTMLFormElement>) {
@@ -56,12 +52,6 @@ export default function Home() {
         />
         <form onSubmit={saveOrder} className="min-w-64">
           <ol className="list-inside text-sm font-[monospace]">
-            {/*<ProductList*/}
-            {/*  title="Курочка"*/}
-            {/*  isNew={true}*/}
-            {/*  products={filteredChickenList}*/}
-            {/*/>*/}
-
             <ProductList title="Бургери" products={filteredBurgersList} />
 
             <ProductList title="Комбо" products={filteredCombosList} />
