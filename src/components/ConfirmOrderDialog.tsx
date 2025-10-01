@@ -53,7 +53,7 @@ export default function ConfirmOrderDialog({
   }
 
   let sum = 0;
-
+  
   return (
     <dialog ref={dialogRef} className="p-6">
       <div className='flex flex-row gap-4 p-3' >
@@ -72,8 +72,6 @@ export default function ConfirmOrderDialog({
         onChange={(e) => setName(e.target.value)}
       />
       {Array.from(order).map(([product, count]) => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
         sum += (product?.prices[currentCard] ?? 0) * count;
         return (
           product && (
